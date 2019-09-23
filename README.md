@@ -111,6 +111,8 @@ namespace ASP_NET.Models
 
 Cuando quieres enviar un modelo desde el controller en el endpoint creas una variable del modelo y la envías por parámetro a la View.
 
+IActionResult es una interface genérica que cumple con determinados requisitos.
+
 ```c#
 using System;
 using ASP_NET.Models;
@@ -137,13 +139,14 @@ namespace ASP_NET.Controllers
 
 La forma mas fácil de ingresar a los datos enviados desde el controller es con la anotación **@Model.ATRIBUTO**
 
-**Razor** es un **Model débilmente tipado** por lo cual se debe especificar el modelo que recibe en la sección de arriba de la vista. 
+**Razor** es un **Model débilmente tipado** por lo cual se debe especificar el modelo que recibe en la sección de arriba de la vista con la sentencia **@model**.  
 
 ```c#
 @model Escuela
 // METADATOS
 @{
     ViewData["Title"] = "Informacion Escuela";
+    Layout = "_Layout";
 }
 
 <h1>Escuela</h1>
@@ -164,5 +167,30 @@ app.UseMvc(routes =>
             });
 ```
 
-------
+## Envió de información desde el Modelo.
+
+Dentro del modelo es posible enviar información contenida dentro del ViewBag.
+
+```
+ViewBag.CosaDinamica = "La monja";
+```
+
+La cual puede ser accedida dentro de la vista de dos formas diferentes ya sea llamando al **ViewBag** o mediante el **ViewData**.
+
+```
+<p><i>@ViewBag.CosaDinamica</i></p>
+<p><i>@ViewData["CosaDinamica"] </i></p>
+```
+
+## Cambio o generación de plantilla.
+
+Las plantillas se declaran dentro de **shared**, esta sirve como contenedor de la View. Y por defecto es _Layout.
+
+Es muy importante que la plantilla siempre contenga dentro del Body la funcion **@RenderBody()** la cual se va a encargar de renderizar el contenido de la vista.
+
+```
+<body>
+    @RenderBody()
+  </body>
+```
 
